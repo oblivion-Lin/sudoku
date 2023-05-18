@@ -2,7 +2,7 @@
 
 class GenerateFinal {
 private:
-	int sudo[9][9];
+	int sudoku[9][9];
 
 public:
 	void Initialize();

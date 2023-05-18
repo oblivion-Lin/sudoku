@@ -26,7 +26,7 @@ void GenerateFinal::Initialize()
 
 	for (int i = 0; i < 9; i++)
 		for (int j = 0; j < 9; j++)
-			sudo[i][j] = seeds[index][i][j];
+			sudoku[i][j] = seeds[index][i][j];
 
 	for (int i = 0; i < 5; i++) {
 		int swapnum = GetRandomNum(0, 8);
@@ -49,7 +49,7 @@ void GenerateFinal::Print()
 {
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++)
-			cout << sudo[i][j]<<" ";
+			cout << sudoku[i][j]<<" ";
 		cout << endl;
 	}	
 	cout << endl;
@@ -58,18 +58,18 @@ void GenerateFinal::Print()
 void GenerateFinal::SwapRow(int r1, int r2)
 {
 	for (int i = 0; i < 9; i++) {
-		int temp = sudo[r1][i];
-		sudo[r1][i] = sudo[r2][i];
-		sudo[r2][i] = temp;
+		int temp = sudoku[r1][i];
+		sudoku[r1][i] = sudoku[r2][i];
+		sudoku[r2][i] = temp;
 	}
 }
 
 void GenerateFinal::SwapColumn(int c1, int c2)
 {
 	for (int i = 0; i < 9; i++) {
-		int temp = sudo[i][c1];
-		sudo[i][c1] = sudo[i][c2];
-		sudo[i][c2] = temp;
+		int temp = sudoku[i][c1];
+		sudoku[i][c1] = sudoku[i][c2];
+		sudoku[i][c2] = temp;
 	}
 }
 
@@ -77,11 +77,11 @@ void GenerateFinal::SwapNum(int num1, int num2)
 {
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
-			if (sudo[i][j] == num1) {
-				sudo[i][j] == num2;
+			if (sudoku[i][j] == num1) {
+				sudoku[i][j] == num2;
 			}
-			else if (sudo[i][j] == num2) {
-				sudo[i][j] == num1;
+			else if (sudoku[i][j] == num2) {
+				sudoku[i][j] == num1;
 			}
 		}
 	}

@@ -26,6 +26,7 @@ bool Solver::ReadInFile(char* path){
 
 	char buff = 0;
 
+	//获取数独初始值
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
 			buff = fin.get();
@@ -49,6 +50,7 @@ bool Solver::ReadInFile(char* path){
 	return true;
 }
 
+//打印结果
 void Solver::Print(){
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
@@ -59,28 +61,28 @@ void Solver::Print(){
 	cout << endl;
 }
 
-
+//解数独
 bool Solver::SolveSudoku(int i,int j){
-	if (j == 9) {
+	if (j == 9) {			//如果是最后一列，则直接从下一行开始
 		return SolveSudoku(i + 1, 0);
 	}
-	else if (i == 9) {
+	else if (i == 9) {		//如果是最后一行，则直接结束
 		return true;
 	}
-	else if (sudoku[i][j] != 0) {
+	else if (sudoku[i][j] != 0) {		//如果不是空格，则填写下一个位置
 		return SolveSudoku(i, j + 1);
 	}
 
 	for (int k = 0; k < 9;k++) {
 		// 如果遇到不合法的数字，就跳过
-		if (Candiate[i][j][k]) {
+		if (Candiate[i][j][k]) {		
 			if (CheckAll(i, j, k + 1)) {
 				sudoku[i][j] = k + 1;
 				// 如果找到一个可行解，立即结束
 				if (SolveSudoku(i, j + 1)) {
 					return true;
 				}
-				sudoku[i][j] = 0;
+				sudoku[i][j] = 0;				//回溯
 			}		
 		}
 	}
@@ -155,7 +157,7 @@ bool Solver::IsValid(){
 	return true;;
 }
 
-void Solver::SetAnswer(){
+void Solver::SetCandiate(){
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
 			FindRes(i, j);

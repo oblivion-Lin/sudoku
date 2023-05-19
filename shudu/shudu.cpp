@@ -3,19 +3,20 @@
 #include<fstream>
 #include "generate.h"
 #include "solve.h"
+#include "common.h"
 using namespace std;
 //六种参数类型
-enum { P_c, P_s, P_n, P_n_m, P_n_r, P_n_u };
+enum { P_c, P_s, P_n, P_n_m, P_n_r, P_n_u };//参数类型
 
 int main(int argc, char** argv) {
-	int patype = -1;
+	int patype = -1;		//参数类型
 	
 	int n = 0;	//数独数量
 	int m = 0; //辅助参数
 	char pathname[20];
 
 
-	if (!strcmp(argv[1], "-c")) {
+	if (!strcmp(argv[1], "-c")) {		//解析命令
 		if (argc!=3) {
 			cout<<"The number of parameters is incorrect" << endl;
 			return 0;
@@ -32,46 +33,58 @@ int main(int argc, char** argv) {
 		patype = P_s;
 	}
 	else if (!strcmp(argv[1], "-n")) {	
-		if (argc == 3) {
+		if (argc >= 3) {
 			n = atoi(argv[2]);
-			if (m > 10000 || m < 1) {
+			if (n > 10000 || n < 1) {
 				cout << "The value of parameter m is incorrect and should be 1-10000" << endl;
 				return 0;
 			}
+		}
+		else {
+			cout << "The number of parameters is incorrect" << endl;
+			return 0;
+		}
+
+		if (argc == 3) {
 			patype = P_n;
 		}
-		else if (argc == 4) {
-			n = atoi(argv[2]);
-			if(!strcmp(argv[3], "-u")) {
+		else if (argc == 4 && !strcmp(argv[3], "-u")) {		
 				patype = P_n_u;
-			}
 		}
-		else if(argc == 5) {
-			n = atoi(argv[2]);
+		else if (argc == 5 && !strcmp(argv[3], "-m")) {
 			m = atoi(argv[4]);
-			if (!strcmp(argv[3], "-m")) {	
-				if (m > 3 || m < 1) {
-					cout << "The value of parameter m is incorrect and should be 1-3" << endl;
-					return 0;
-				}
-				patype = P_n_m;
+			if (m > 3 || m < 1) {
+				cout << "The value of parameter m is incorrect and should be 1-3" << endl;
+				return 0;
 			}
-			else if (!strcmp(argv[3], "-r")) {
-				if (m > 55 || m < 20) {
-					cout << "The value of parameter r is incorrect and should be 20-55" << endl;
-					return 0;
-				}
-				patype = P_n_r;
+			patype = P_n_m;
+		}
+		else if (argc == 5 && !strcmp(argv[3], "-r")) {
+			m = atoi(argv[4]);
+			if (m > 55 || m < 20) {
+				cout << "The value of parameter r is incorrect and should be 20-55" << endl;
+				return 0;
 			}
-		}		
-	}			
+			patype = P_n_r;
+		}
+		else {
+			cout << "undefined command" << endl;
+			return 0;
+		}
+	}
+	else if (!strcmp(argv[1], "-t")) {
+		n = atoi(argv[2]);
+		for(int i = 0;i<n;i++)
+			cout<<GetRandomNum(0,9) << endl;
+	}
 	else {
-		cout<<"undefined" << endl;
-		return 0;
+
+		cout << "undefined command" << endl;
+			return 0;
 	}
 
 	
-
+	//选择相应操作
 	switch (patype) {
 	case P_c: {
 		Generator generator;
@@ -89,7 +102,7 @@ int main(int argc, char** argv) {
 			cout << "Valid" << endl;
 		}
 		solver.Print();
-		solver.SetAnswer();
+		solver.SetCandiate();
 		solver.SolveSudoku(0, 0);
 		if (!solver.IsValid()) {
 			cout << "IsValid" << endl;
@@ -124,9 +137,5 @@ int main(int argc, char** argv) {
 		cout << "wrong!" << endl;
 		break;
 	}
-
-
-	
-
 	//system("pause");
 }

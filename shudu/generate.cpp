@@ -6,7 +6,7 @@
 using namespace std;
 
 
-static int seeds[5][9][9] = {
+int seeds[4][9][9] = {
    {{ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 
 	{ 4, 5, 6, 7, 8, 9, 1, 2, 3 },
 	{ 7, 8, 9, 1, 2, 3, 4, 5, 6 },
@@ -16,31 +16,59 @@ static int seeds[5][9][9] = {
 	{ 5, 3, 1, 6, 4, 2, 9, 7, 8 },
 	{ 6, 4, 2, 9, 7, 8, 5, 3, 1 },
 	{ 9, 7, 8, 5, 3, 1, 6, 4, 2 }},
-	{},{},{},{}
+   {{ 3, 9, 4, 5, 1, 7, 6, 2, 8 }, 
+	{ 5, 1, 7, 6, 2, 8, 3, 9, 4 },
+	{ 6, 2, 8, 3, 9, 4, 5, 1, 7 },
+	{ 9, 3, 5, 4, 7, 1, 2, 8, 6 },
+	{ 4, 7, 1, 2, 8, 6, 9, 3, 5 },
+	{ 2, 8, 6, 9, 3, 5, 4, 7, 1 },
+	{ 1, 4, 3, 7, 5, 9, 8, 6, 2 },
+	{ 7, 5, 9, 8, 6, 2, 1, 4, 3 },
+	{ 8, 6, 2, 1, 4, 3, 7, 5, 9 }},
+   {{ 7, 6, 1, 9, 8, 4, 2, 3, 5 }, 
+	{ 9, 8, 4, 2, 3, 5, 7, 6, 1 },
+	{ 2, 3, 5, 7, 6, 1, 9, 8, 4 },
+	{ 6, 7, 9, 1, 4, 8, 3, 5, 2 },
+	{ 1, 4, 8, 3, 5, 2, 6, 7, 9 },
+	{ 3, 5, 2, 6, 7, 9, 1, 4, 8 },
+	{ 8, 1, 7, 4, 9, 6, 5, 2, 3 },
+	{ 4, 9, 6, 5, 2, 3, 8, 1, 7 },
+	{ 5, 2, 3, 8, 1, 7, 4, 9, 6 }},
+   {{ 7, 1, 5, 4, 3, 6, 2, 9, 8 }, 
+	{ 4, 3, 6, 2, 9, 8, 7, 1, 5 },
+	{ 2, 9, 8, 7, 1, 5, 4, 3, 6 },
+	{ 1, 7, 4, 5, 6, 3, 9, 8, 2 },
+	{ 5, 6, 3, 9, 8, 2, 1, 7, 4 },
+	{ 9, 8, 2, 1, 7, 4, 5, 6, 3 },
+	{ 3, 5, 7, 6, 4, 1, 8, 2, 9 },
+	{ 6, 4, 1, 8, 2, 9, 3, 5, 7 },
+	{ 8, 2, 9, 3, 5, 7, 6, 4, 1 }}
 };
 
 //合法的交换操作一共九种
 static int SwapWay[9][2] = { {0,1},{1,2},{0,2},{3,4},{4,5},{3,5} ,{6,7},{7,8},{6,8} };
 
-void Generator::Initialize()
+void Generator::Initialize()	//初始化一个数独
 {
-	int index = 0;	//种子编号
+	int index = GetRandomNum(0,3);	//种子编号
+	//int index = 0;
+	cout<<index<<endl;
 
 	for (int i = 0; i < 9; i++)
 		for (int j = 0; j < 9; j++)
 			sudoku[i][j] = seeds[index][i][j];
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 5; i++) {			//随机进行行交换
 		int swapnum = GetRandomNum(0, 8);
 		SwapRow(SwapWay[swapnum][0], SwapWay[swapnum][1]);
 	}
-	
-	for (int i = 0; i < 5; i++) {
+		
+	for (int i = 0; i < 5; i++) {		//随机进行列交换
 		int swapnum = GetRandomNum(0, 8);
 		SwapColumn(SwapWay[swapnum][0], SwapWay[swapnum][1]);
 	}
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {			//随机进行数字交换
 		int swapnum1 = GetRandomNum(1, 9);
 		int swapnum2 = GetRandomNum(1, 9);
 		SwapNum(swapnum1, swapnum2);
@@ -149,9 +177,9 @@ void Generator::GenUniPuzzle(int n){
 		Initialize();
 		DigHole(40);
 		//Print();
-		while (true) {
+		while (true) {		
 			solver.SetSudoku(sudoku);
-			solver.SetAnswer();
+			solver.SetCandiate();
 			solver.SolveSudoku(0, 0);
 			Pos res = GetDiffPos(solver);
 			//cout << res.x<<"  " << res.y << endl;

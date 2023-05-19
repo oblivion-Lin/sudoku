@@ -2,6 +2,7 @@
 #include "common.h"
 #include <iostream>
 #include <random>
+#include "solve.h"
 using namespace std;
 
 
@@ -93,10 +94,10 @@ void Generator::SwapNum(int num1, int num2)
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
 			if (sudoku[i][j] == num1) {
-				sudoku[i][j] == num2;
+				sudoku[i][j] = num2;
 			}
 			else if (sudoku[i][j] == num2) {
-				sudoku[i][j] == num1;
+				sudoku[i][j] = num1;
 			}
 		}
 	}
@@ -140,6 +141,46 @@ void Generator::DigHole(int n){
 		}
 	}
 	return;
+}
+
+void Generator::GenUniPuzzle(int n){
+	Solver solver;
+	for (int i = 0; i < n; i++) {
+		Initialize();
+		DigHole(40);
+		//Print();
+		while (true) {
+			solver.SetSudoku(sudoku);
+			solver.SetAnswer();
+			solver.SolveSudoku(0, 0);
+			Pos res = GetDiffPos(solver);
+			//cout << res.x<<"  " << res.y << endl;
+			if (res.x == -1) {
+				break;
+			}
+			else {
+				sudoku[res.x][res.y] = answer[res.x][res.y];
+			}
+		}
+		cout << "index: " << i << endl;
+		Print();
+	}
+	return;
+}
+
+Pos Generator::GetDiffPos(Solver solver){
+	Pos res;
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 9; j++) {
+			if (answer[i][j] != solver.GetSudoku(i,j)) {
+				res.x = i;
+				res.y = j;
+				return res;
+			}
+		}
+	}
+
+	return res;
 }
 
 

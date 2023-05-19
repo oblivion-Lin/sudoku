@@ -103,21 +103,22 @@ int main(int argc, char** argv) {
 	}
 	case P_n: {
 		Generator generator;
-		generator.GeneratePuzzle(n, 1);
+		generator.GenPuzzle(n, 1);
 		break;
 	}	
 	case P_n_m: {
 		Generator generator;
-		generator.GeneratePuzzle(n, m);
+		generator.GenPuzzle(n, m);
 		break;
 	}
 	case P_n_r: {
 		Generator generator;
-		generator.GeneratePuzzle(n, m,true);
+		generator.GenPuzzle(n, m,true);
 		break;
 	}
 	case P_n_u:
-		cout << endl;
+		Generator generator;
+		generator.GenUniPuzzle(n);
 		break;
 	default:
 		cout << "wrong!" << endl;

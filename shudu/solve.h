@@ -1,5 +1,5 @@
 #pragma once
-
+#include "generate.h"
 class Solver {
 private:
 	int sudoku[9][9];
@@ -18,4 +18,7 @@ public:
 	void SetAnswer();
 	bool CheckAll(int r1,int c1,int num);
 	void WriteInFile();
+	void SetSudoku(int arr[9][9]);
+	int GetSudoku(int i ,int j) { return sudoku[i][j]; };
+	
 };

@@ -1,4 +1,5 @@
 #include "generate.h"
+#include "common.h"
 #include <iostream>
 #include <random>
 using namespace std;
@@ -20,7 +21,7 @@ static int seeds[5][9][9] = {
 //合法的交换操作一共九种
 static int SwapWay[9][2] = { {0,1},{1,2},{0,2},{3,4},{4,5},{3,5} ,{6,7},{7,8},{6,8} };
 
-void GenerateFinal::Initialize()
+void Generator::Initialize()
 {
 	int index = 0;	//种子编号
 
@@ -43,19 +44,33 @@ void GenerateFinal::Initialize()
 		int swapnum2 = GetRandomNum(1, 9);
 		SwapNum(swapnum1, swapnum2);
 	}
+
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 9; j++) {
+			answer[i][j] = sudoku[i][j];
+		}
+	}
+
 }
 
-void GenerateFinal::Print()
-{
+void Generator::Print()
+{	
+	cout << " -----------------------------------" << endl;
 	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++)
-			cout << sudoku[i][j]<<" ";
-		cout << endl;
+		cout << "|";
+		for (int j = 0; j < 9; j++) {
+			if (sudoku[i][j] != 0)
+				cout << " " << sudoku[i][j] << " |";
+			else
+				cout << "   |";
+		}
+			
+		cout << endl << " -----------------------------------" << endl;
 	}	
 	cout << endl;
 }
 
-void GenerateFinal::SwapRow(int r1, int r2)
+void Generator::SwapRow(int r1, int r2)
 {
 	for (int i = 0; i < 9; i++) {
 		int temp = sudoku[r1][i];
@@ -64,7 +79,7 @@ void GenerateFinal::SwapRow(int r1, int r2)
 	}
 }
 
-void GenerateFinal::SwapColumn(int c1, int c2)
+void Generator::SwapColumn(int c1, int c2)
 {
 	for (int i = 0; i < 9; i++) {
 		int temp = sudoku[i][c1];
@@ -73,7 +88,7 @@ void GenerateFinal::SwapColumn(int c1, int c2)
 	}
 }
 
-void GenerateFinal::SwapNum(int num1, int num2)
+void Generator::SwapNum(int num1, int num2)
 {
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
@@ -87,20 +102,53 @@ void GenerateFinal::SwapNum(int num1, int num2)
 	}
 }
 
-int GenerateFinal::GetRandomNum(int min,int max)
-{
-	random_device seed;		//硬件生成随机数种子
-	ranlux48 engine(seed());	//利用种子生成随机数引擎
-	uniform_int_distribution<> distrib(min, max);	//设置随机数范围，并为均匀分布
-	return distrib(engine);
+void Generator::GenPuzzle(int n,int level,bool flag){
+	for (int i = 0; i < n; i++) {
+		Initialize();
+		//根据难度等级进行挖洞
+		if (!flag) {
+			switch (level) {
+			case 1:
+				DigHole(30);
+				break;
+			case 2:
+				DigHole(40);
+				break;
+			case 3:
+				DigHole(60);
+				break;
+			default:
+				break;
+			}
+		}
+		else {
+			DigHole(level);
+		}
+		Print();
+	}
+	return;
+}
+
+void Generator::DigHole(int n){
+	for (int i = 0; i < n; i++) {
+		int row = GetRandomNum(0,8);
+		int column = GetRandomNum(0, 8);
+		if (sudoku[row][column] != 0)
+			sudoku[row][column] = 0;
+		else {
+			i--;
+		}
+	}
+	return;
 }
 
 
-int GenerateFinal::Generate(int n) {
+
+
+void Generator::GenerateFinal(int n) {
 	for (int i = 0; i < n; i++) {
 		Initialize();
 		Print();
 	}
-	return 0;
-
+	return;
 }

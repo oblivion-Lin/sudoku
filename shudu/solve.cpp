@@ -15,10 +15,11 @@ Solver::Solver(){
 	}
 }
 
-bool Solver::GetNumInFile(char* path){
+bool Solver::ReadInFile(char* path){
 	ifstream fin;
 	fin.open(path, ios::in);
 	if (!fin.is_open()) {
+		cout << path << endl;
 		cout << "无法找到这个文件！" << endl;
 		return false;
 	}
@@ -170,4 +171,21 @@ bool Solver::CheckAll(int r1, int c1, int num){
 		return true;
 	else
 		return false;
+}
+
+void Solver::WriteInFile() {
+	ofstream file("answer.txt");
+	if (file.is_open()){
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				file << sudoku[i][j] <<" ";
+			}
+			file << endl;
+		}
+		file << endl;
+
+		file.close();
+	}
+	else 
+		cout << "Unable to write the answer in file";
 }

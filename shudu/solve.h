@@ -7,7 +7,7 @@ private:
 
 public:
 	Solver();
-	bool GetNumInFile(char* path);
+	bool ReadInFile(char* path);
 	void Print();
 	bool SolveSudoku(int i, int j);
 	int CheckRow(int r1,int num);
@@ -17,4 +17,5 @@ public:
 	bool IsValid();
 	void SetAnswer();
 	bool CheckAll(int r1,int c1,int num);
+	void WriteInFile();
 };

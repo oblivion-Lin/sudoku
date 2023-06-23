@@ -48,6 +48,15 @@ int seeds[4][9][9] = {
 //合法的交换操作一共九种
 static int SwapWay[9][2] = { {0,1},{1,2},{0,2},{3,4},{4,5},{3,5} ,{6,7},{7,8},{6,8} };
 
+Generator::Generator(){
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 9; j++) {
+			sudoku[i][j] = -1;
+			answer[i][j] = -1;
+		}
+	}
+}
+
 void Generator::Initialize()	//初始化一个数独
 {
 	int index = GetRandomNum(0,3);	//种子编号

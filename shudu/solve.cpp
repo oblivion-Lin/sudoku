@@ -2,7 +2,8 @@
 #include<fstream>
 #include<iostream>
 using namespace std;
-
+ifstream fin;
+ofstream file;
 
 Solver::Solver(){
 	for (int i = 0; i < 9; i++) {
@@ -15,17 +16,9 @@ Solver::Solver(){
 	}
 }
 
-bool Solver::ReadInFile(char* path){
-	ifstream fin;
-	fin.open(path, ios::in);
-	if (!fin.is_open()) {
-		cout << path << endl;
-		cout << "无法找到这个文件！" << endl;
-		return false;
-	}
-
-	char buff = 0;
-
+bool Solver::ReadInFile(){
+	char buff;
+	
 	//获取数独初始值
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
@@ -46,7 +39,6 @@ bool Solver::ReadInFile(char* path){
 			}
 		}
 	}
-	fin.close();
 	return true;
 }
 
@@ -176,7 +168,7 @@ bool Solver::CheckAll(int r1, int c1, int num){
 }
 
 void Solver::WriteInFile() {
-	ofstream file("answer.txt");
+	
 	if (file.is_open()){
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -186,7 +178,7 @@ void Solver::WriteInFile() {
 		}
 		file << endl;
 
-		file.close();
+		//file.close();
 	}
 	else 
 		cout << "Unable to write the answer in file";

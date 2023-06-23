@@ -1,5 +1,6 @@
 #pragma once
 #include "generate.h"
+
 class Solver {
 private:
 	int sudoku[9][9];		//数独棋盘
@@ -7,7 +8,7 @@ private:
 
 public:
 	Solver();
-	bool ReadInFile(char* path);		//从文件中读数据
+	bool ReadInFile();		//从文件中读数据
 	void Print();			//打印结果
 	bool SolveSudoku(int i, int j);		//解数独
 	int CheckRow(int r1,int num);		//寻找r1行中num的个数

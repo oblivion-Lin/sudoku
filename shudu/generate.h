@@ -13,6 +13,7 @@ private:
 	int sudoku[9][9];		//数独题目
 	int answer[9][9];		//数独答案
 public:
+	Generator();
 	void Initialize();		//初始化一个完整的数独
 	void GenerateFinal(int n);			//生成n个数独终盘	
 	void Print();					

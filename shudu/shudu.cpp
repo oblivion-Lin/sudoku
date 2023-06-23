@@ -7,6 +7,8 @@
 using namespace std;
 //六种参数类型
 enum { P_c, P_s, P_n, P_n_m, P_n_r, P_n_u };//参数类型
+extern ifstream fin;
+extern ofstream file;
 
 int main(int argc, char** argv) {
 	int patype = -1;		//参数类型
@@ -83,7 +85,6 @@ int main(int argc, char** argv) {
 			return 0;
 	}
 
-	
 	//选择相应操作
 	switch (patype) {
 	case P_c: {
@@ -93,25 +94,35 @@ int main(int argc, char** argv) {
 	}	
 	case P_s: {
 		Solver solver;
-		solver.ReadInFile(pathname);
-		if (!solver.IsValid()) {
-			cout << "IsValid" << endl;
-			return 0;
+		fin.open(pathname, ios::in);
+		file.open("answer.txt");
+		if (!fin.is_open()) {
+			cout << pathname << endl;
+			cout << "无法找到这个文件！" << endl;
+			return false;
 		}
-		else {
-			cout << "Valid" << endl;
+		while (solver.ReadInFile()) {
+			if (!solver.IsValid()) {
+				cout << "IsValid" << endl;
+				return 0;
+			}
+			else {
+				cout << "Valid" << endl;
+			}
+			solver.Print();
+			solver.SetCandiate();
+			solver.SolveSudoku(0, 0);
+			if (!solver.IsValid()) {
+				cout << "IsValid" << endl;
+			}
+			else {
+				cout << "Valid" << endl;
+			}
+			solver.Print();
+			solver.WriteInFile();
 		}
-		solver.Print();
-		solver.SetCandiate();
-		solver.SolveSudoku(0, 0);
-		if (!solver.IsValid()) {
-			cout << "IsValid" << endl;
-		}
-		else {
-			cout << "Valid" << endl;
-		}
-		solver.Print();
-		solver.WriteInFile();
+		fin.close();
+		file.close();
 		break; 
 	}
 	case P_n: {
@@ -129,10 +140,11 @@ int main(int argc, char** argv) {
 		generator.GenPuzzle(n, m,true);
 		break;
 	}
-	case P_n_u:
+	case P_n_u: {
 		Generator generator;
 		generator.GenUniPuzzle(n);
 		break;
+	}	
 	default:
 		cout << "wrong!" << endl;
 		break;

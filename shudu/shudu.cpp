@@ -109,6 +109,7 @@ int main(int argc, char** argv) {
 			else {
 				cout << "Valid" << endl;
 			}
+			cout<<"puzzle:" << endl;
 			solver.Print();
 			solver.SetCandiate();
 			solver.SolveSudoku(0, 0);
@@ -118,6 +119,7 @@ int main(int argc, char** argv) {
 			else {
 				cout << "Valid" << endl;
 			}
+			cout<<"answer:" << endl;
 			solver.Print();
 			solver.WriteInFile();
 		}

@@ -1,0 +1,32 @@
+.\sudoku.exe -c -1
+.\sudoku.exe -c 0
+.\sudoku.exe -c 1
+.\sudoku.exe -c -10
+.\sudoku.exe -c -1000000
+.\sudoku.exe -c -1000001
+.\sudoku.exe -s game.txt
+.\sudoku.exe -c :D/sudoku/X86/game.txt
+.\sudoku.exe -n -1
+.\sudoku.exe -n 0
+.\sudoku.exe -n 1
+.\sudoku.exe -n 10
+.\sudoku.exe -n -10000
+.\sudoku.exe -n 10001
+.\sudoku.exe -n 1 -m 0
+.\sudoku.exe -n 1 -m -1
+.\sudoku.exe -n 1 -m 1
+.\sudoku.exe -n 1 -m 2
+.\sudoku.exe -n 1 -m 3
+.\sudoku.exe -n 1 -m 4
+.\sudoku.exe -n 100 -m 2
+.\sudoku.exe -n 10001 -m 3
+.\sudoku.exe -m 2
+.\sudoku.exe -n 1 -r 19
+.\sudoku.exe -n 1 -r 20
+.\sudoku.exe -n 1 -r 25
+.\sudoku.exe -n 1 -r 55
+.\sudoku.exe -n 1 -r 56
+.\sudoku.exe -r 55
+.\sudoku.exe -n 1 -u
+.\sudoku.exe -n 0 -u
+.\sudoku.exe -n 20 -u
